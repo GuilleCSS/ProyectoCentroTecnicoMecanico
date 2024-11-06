@@ -14,7 +14,7 @@ class Database {
                 console.log('Conexion de la base de datos satisfactoria');
             })
             .catch((err) => {
-                console.error('Error en la conexion de la base de datos:', err);
+                console.error('Error en la conexion de la base de Datos:', err);
             });
     }
 }
