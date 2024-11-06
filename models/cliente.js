@@ -1,3 +1,5 @@
+const mongoose = require('mongoose'); // Asegúrate de importar mongoose
+
 const clienteSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     telefono: String,

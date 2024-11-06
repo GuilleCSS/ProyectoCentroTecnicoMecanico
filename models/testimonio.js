@@ -1,3 +1,5 @@
+const mongoose = require('mongoose'); // Asegúrate de importar mongoose
+
 const testimonioSchema = new mongoose.Schema({
     calificacion: { type: Number, min: 1, max: 5 },
     comentario: String,

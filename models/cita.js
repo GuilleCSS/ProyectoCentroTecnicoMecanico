@@ -1,3 +1,5 @@
+const mongoose = require('mongoose'); // Asegúrate de importar mongoose
+
 const citaSchema = new mongoose.Schema({
     fecha: { type: Date, required: true },
     servicio: String,

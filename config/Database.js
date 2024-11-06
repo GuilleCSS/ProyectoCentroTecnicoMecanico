@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Cambia estos valores por los de tu conexión en MongoDB Atlas
-const uri = "mongodb+srv://angelsp:admin@angelsp.t6vce.mongodb.net/?retryWrites=true&w=majority&appName=Angelsp";
+const uri = "mongodb+srv://angelsp:admin@angelsp.t6vce.mongodb.net/Centro_tecnico?retryWrites=true&w=majority&appName=Angelsp";
 
 class Database {
     constructor() {
