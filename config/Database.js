@@ -11,10 +11,10 @@ class Database {
     _connect() {
         mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => {
-                console.log('Database connection successful');
+                console.log('Conexion de la base de datos satisfactoria');
             })
             .catch((err) => {
-                console.error('Database connection error:', err);
+                console.error('Error en la conexion de la base de datos:', err);
             });
     }
 }
