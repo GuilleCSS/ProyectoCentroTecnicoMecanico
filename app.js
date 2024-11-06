@@ -1,16 +1,15 @@
-// app.js
-
-// Importa la clase Database para iniciar la conexión a MongoDB
-require('./config/Database');
-
-// Resto de tu código de configuración y servidor
 const express = require('express');
+require('./config/Database'); // Importa la conexión a la base de datos
+const vehiculosRoutes = require('./routes/vehiculos');
+const citasRoutes = require('./routes/citas');
+
 const app = express();
+app.use(express.json());
 
-// Configuración y middlewares adicionales aquí
-// ...
+// Rutas
+app.use('/vehiculos', vehiculosRoutes);
+app.use('/citas', citasRoutes);
 
-// Iniciar servidor
-app.listen(3000, () => {
-    console.log('Servidor ejecutándose en el puerto 3000');
-});
+// Puerto
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Servidor en el puerto ${PORT}`));
