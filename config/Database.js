@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Cambia estos valores por los de tu conexión en MongoDB Atlas
-const uri = "mongodb+srv://angelsp:admin@angelsp.t6vce.mongodb.net/Centro_tecnico?retryWrites=true&w=majority&appName=Angelsp";
+const uri = `mongodb+srv://angelsp:${process.env.DB_PASSWORD}@angelsp.t6vce.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Angelsp`;
 
 class Database {
     constructor() {
