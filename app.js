@@ -18,7 +18,7 @@ app.use(express.json()); // Middleware para manejar JSON
 // Rutas y métodos permitidos para `/clientes`
 const corsOptionsClientes = {
   origin: 'http://localhost:3000', // Define el origen permitido
-  methods: ['GET', 'POST'], // Solo permite GET y POST para clientes
+  methods: ['GET', 'POST', 'DELETE'], // Solo permite GET y POST para clientes
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
