@@ -10,7 +10,7 @@ const app = express();
 
 // Configuración del Middleware de Datos
 app.use(express.urlencoded({ extended: true })); // Permite el manejo de datos URL codificados
- 
+
 app.use(express.json()); // Middleware para manejar JSON
 
 
