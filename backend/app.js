@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors'); // Importa el módulo de CORS
-require('./config/database'); // Importa la conexión a la base de datos
+require('./config/Database'); // Importa la conexión a la base de datos
 
 const vehiculosRoutes = require('./routes/vehiculos');
 const citasRoutes = require('./routes/citas');
@@ -10,7 +10,7 @@ const app = express();
 
 // Configuración del Middleware de Datos
 app.use(express.urlencoded({ extended: true })); // Permite el manejo de datos URL codificados
-
+ 
 app.use(express.json()); // Middleware para manejar JSON
 
 
