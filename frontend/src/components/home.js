@@ -1,20 +1,21 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './home.css';
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="space-y-12">
+      {/* Encabezado */}
       <header className="text-center">
         <h1 className="text-4xl font-bold text-red-700">Taller Upiit</h1>
       </header>
 
+      {/* Sección de Imagen */}
       <section className="relative h-96">
-        <Image
+        <img
           src="/placeholder.svg?height=400&width=800"
           alt="Coche en reparación"
-          layout="fill"
-          objectFit="cover"
-          className="rounded-lg"
+          className="w-full h-full object-cover rounded-lg"
         />
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <p className="text-white text-2xl font-semibold max-w-2xl text-center px-4">
@@ -23,6 +24,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Misión, Visión, Objetivos */}
       <section className="grid md:grid-cols-3 gap-8">
         <div className="bg-white p-6 rounded-lg shadow">
           <h2 className="text-xl font-semibold text-red-700 mb-2">Misión</h2>
@@ -38,6 +40,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Ubicación */}
       <section className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-2xl font-semibold text-red-700 mb-4">Ubicación</h2>
         <p className="mb-2">Dirección: UPIIT, TLAXCALA DE XICOHTENCATL</p>
@@ -55,6 +58,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Servicios Ofrecidos */}
       <section className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-2xl font-semibold text-red-700 mb-4">Servicios Ofrecidos</h2>
         <ul className="grid md:grid-cols-2 gap-4">
@@ -73,16 +77,17 @@ export default function Home() {
         </ul>
       </section>
 
+      {/* Testimonios */}
       <section className="bg-white p-6 rounded-lg shadow">
         <h2 className="text-2xl font-semibold text-red-700 mb-4">Testimonios de Clientes</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="flex items-center space-x-4">
-            <Image
+            <img
               src="/placeholder.svg?height=100&width=100"
               alt="Cliente satisfecho"
+              className="rounded-full"
               width={100}
               height={100}
-              className="rounded-full"
             />
             <div>
               <p className="italic">"Excelente servicio, rápido y profesional. Altamente recomendado."</p>
@@ -90,12 +95,12 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Image
+            <img
               src="/placeholder.svg?height=100&width=100"
               alt="Cliente satisfecho"
+              className="rounded-full"
               width={100}
               height={100}
-              className="rounded-full"
             />
             <div>
               <p className="italic">"Siempre confío en Taller Upiit para el mantenimiento de mi vehículo."</p>
@@ -105,11 +110,17 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Botón de Agendar Cita */}
       <section className="text-center">
-        <Link href="/agendar" className="inline-block bg-red-700 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-800 transition duration-300">
+        <Link
+          to="/appointment"
+          className="inline-block bg-red-700 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-800 transition duration-300"
+        >
           Agendar una Cita
         </Link>
       </section>
     </div>
-  )
-}
+  );
+};
+
+export default Home;
