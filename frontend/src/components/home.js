@@ -1,67 +1,84 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './home.css';
 
 const Home = () => {
   return (
-    <div className="space-y-12">
-      {/* Encabezado */}
-      <header className="text-center">
-        <h1 className="text-4xl font-bold text-red-700">Taller Upiit</h1>
-      </header>
+    <div className="home-container">
+      {/* Barra de Navegación */}
+        <div className="container">
+          <Link className="navbar-brand" to="/">
+            
+          </Link>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Iniciar sesión
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">
+                  Registrarse
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/appointment">
+                  Agendar cita
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-      {/* Sección de Imagen */}
-      <section className="relative h-96">
-        <img
-          src="/placeholder.svg?height=400&width=800"
-          alt="Coche en reparación"
-          className="w-full h-full object-cover rounded-lg"
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <p className="text-white text-2xl font-semibold max-w-2xl text-center px-4">
-            Bienvenido a Taller Upiit, donde la excelencia en reparación automotriz se encuentra con la satisfacción del cliente.
-          </p>
+      {/* Video de Fondo con Texto */}
+      <section className="position-relative mb-4">
+        <video autoPlay loop muted className="w-100">
+          <source src="juca2.mp4" type="video/mp4" />
+          Tu navegador no soporta la reproducción de videos.
+        </video>
+        <div className="position-absolute top-50 start-50 translate-middle text-center text-white">
+          <h1 className="display-4 text-uppercase fw-bold bg-dark bg-opacity-50 p-3 rounded">Taller Upiit</h1>
+          <p className="lead bg-dark bg-opacity-50 p-2 rounded">Donde la excelencia automotriz y la satisfacción del cliente se unen.</p>
         </div>
       </section>
 
-      {/* Misión, Visión, Objetivos */}
-      <section className="grid md:grid-cols-3 gap-8">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-red-700 mb-2">Misión</h2>
-          <p>Proveer servicios de reparación automotriz de alta calidad con un enfoque en la satisfacción del cliente.</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-red-700 mb-2">Visión</h2>
-          <p>Ser el taller mecánico líder en la región, reconocido por nuestra excelencia y compromiso.</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-red-700 mb-2">Objetivos</h2>
-          <p>Ofrecer servicios rápidos y eficientes, mantener altos estándares de calidad, y garantizar la satisfacción del cliente.</p>
-        </div>
-      </section>
-
-      {/* Ubicación */}
-      <section className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold text-red-700 mb-4">Ubicación</h2>
-        <p className="mb-2">Dirección: UPIIT, TLAXCALA DE XICOHTENCATL</p>
-        <p className="mb-4">Horarios de Atención: De lunes a viernes de 8 a.m a 7 p.m</p>
-        <div className="aspect-w-16 aspect-h-9">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.761237551881!2d-98.23794908525141!3d19.32282198695398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfd8f92d86429d%3A0x8e595e1b00e4a533!2sUPIIT!5e0!3m2!1ses-419!2smx!4v1659123456789!5m2!1ses-419!2smx"
-            width="600"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen={true}
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
+      {/* Secciones: Misión, Visión, Objetivos */}
+      <section className="container mb-5">
+        <div className="row g-4">
+          {[
+            { title: 'Misión', desc: 'Proveer servicios de reparación automotriz de alta calidad con un enfoque en la satisfacción del cliente.' },
+            { title: 'Visión', desc: 'Ser el taller mecánico líder en la región, reconocido por nuestra excelencia y compromiso.' },
+            { title: 'Objetivos', desc: 'Ofrecer servicios rápidos y eficientes, mantener altos estándares de calidad, y garantizar la satisfacción del cliente.' },
+          ].map((item, index) => (
+            <div key={index} className="col-md-4">
+              <div className="card h-100 shadow">
+                <div className="card-body">
+                  <h5 className="card-title text-danger">{item.title}</h5>
+                  <p className="card-text">{item.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Servicios Ofrecidos */}
-      <section className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold text-red-700 mb-4">Servicios Ofrecidos</h2>
-        <ul className="grid md:grid-cols-2 gap-4">
+      {/* Servicios */}
+      <section className="container mb-5">
+        <h2 className="text-center text-danger mb-4">Servicios Ofrecidos</h2>
+        <div className="row g-4">
           {[
             { name: 'Reparación de motores', desc: 'Diagnóstico y reparación de problemas del motor para un rendimiento óptimo.' },
             { name: 'Cambio de aceite', desc: 'Mantenimiento regular para prolongar la vida útil de su vehículo.' },
@@ -69,56 +86,45 @@ const Home = () => {
             { name: 'Mantenimiento preventivo', desc: 'Evite problemas futuros con nuestro servicio de mantenimiento integral.' },
             { name: 'Reparación de sistemas eléctricos', desc: 'Soluciones para todos los problemas eléctricos de su vehículo.' },
           ].map((service, index) => (
-            <li key={index} className="bg-gray-100 p-4 rounded">
-              <h3 className="font-semibold text-red-700">{service.name}</h3>
-              <p className="text-sm text-gray-600">{service.desc}</p>
-            </li>
+            <div key={index} className="col-md-6">
+              <div className="card h-100 shadow">
+                <div className="card-body">
+                  <h5 className="card-title text-danger">{service.name}</h5>
+                  <p className="card-text">{service.desc}</p>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </section>
 
-      {/* Testimonios */}
-      <section className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-2xl font-semibold text-red-700 mb-4">Testimonios de Clientes</h2>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="flex items-center space-x-4">
-            <img
-              src="/placeholder.svg?height=100&width=100"
-              alt="Cliente satisfecho"
-              className="rounded-full"
-              width={100}
-              height={100}
-            />
-            <div>
-              <p className="italic">"Excelente servicio, rápido y profesional. Altamente recomendado."</p>
-              <p className="text-sm text-gray-600 mt-2">- Juan Pérez</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <img
-              src="/placeholder.svg?height=100&width=100"
-              alt="Cliente satisfecho"
-              className="rounded-full"
-              width={100}
-              height={100}
-            />
-            <div>
-              <p className="italic">"Siempre confío en Taller Upiit para el mantenimiento de mi vehículo."</p>
-              <p className="text-sm text-gray-600 mt-2">- María González</p>
-            </div>
-          </div>
+      {/* Mapa */}
+      <section className="container mb-5">
+        <h2 className="text-center text-danger mb-4">Ubicación</h2>
+        <div className="ratio ratio-16x9">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.761237551881!2d-98.23794908525141!3d19.32282198695398!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85cfd8f92d86429d%3A0x8e595e1b00e4a533!2sUPIIT!5e0!3m2!1ses-419!2smx!4v1659123456789!5m2!1ses-419!2smx"
+            title="Mapa de ubicación"
+            allowFullScreen
+            loading="lazy"
+          ></iframe>
         </div>
       </section>
 
       {/* Botón de Agendar Cita */}
-      <section className="text-center">
+      <section className="text-center mb-5">
         <Link
           to="/appointment"
-          className="inline-block bg-red-700 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-red-800 transition duration-300"
+          className="btn btn-danger btn-lg px-5 py-3 shadow-sm fw-bold text-uppercase"
         >
           Agendar una Cita
         </Link>
       </section>
+
+      {/* Footer */}
+      <footer className="bg-dark text-white text-center py-4">
+        <p className="mb-0">&copy; 2024 Taller Upiit. Todos los derechos reservados.</p>
+      </footer>
     </div>
   );
 };
