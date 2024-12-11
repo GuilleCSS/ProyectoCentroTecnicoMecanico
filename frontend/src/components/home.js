@@ -46,7 +46,7 @@ const Home = () => {
       {/* Video de Fondo con Texto */}
       <section className="position-relative mb-4">
         <video autoPlay loop muted className="w-100">
-          <source src="juca2.mp4" type="video/mp4" />
+          <source src="jucamariachi.mp4" type="video/mp4" />
           Tu navegador no soporta la reproducción de videos.
         </video>
         <div className="position-absolute top-50 start-50 translate-middle text-center text-white">
