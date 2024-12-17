@@ -1,0 +1,72 @@
+/* Estilos para el menú de hamburguesa */
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Asegúrate de que el icono tenga un z-index alto */
+}
+
+.hamburger-icon .bar {
+  width: 100%;
+  height: 4px;
+  background-color: #fff;
+  transition: 0.3s;
+}
+
+/* Cuando el menú está abierto, cambia la apariencia del icono */
+.hamburger-icon.open .bar:nth-child(1) {
+  transform: rotate(45deg);
+  position: relative;
+  top: 8px;
+}
+
+.hamburger-icon.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open .bar:nth-child(3) {
+  transform: rotate(-45deg);
+  position: relative;
+  top: -8px;
+}
+
+/* Menú desplegable */
+.menu {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background-color: #dc3545;
+  border: 1px solid #ddd;
+  width: 200px;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 999; /* Asegúrate de que el menú se apile encima del video */
+}
+
+.menu.show {
+  display: block;
+  opacity: 1;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  padding: 10px;
+  text-align: center;
+}
+
+.menu ul li a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+}

@@ -58,3 +58,51 @@
     padding: 1.5rem;
   }
   
+  /* Estilos para la sección de ubicación */
+.card {
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  color: #dc3545; /* Rojo de la marca */
+}
+
+.card p {
+  font-size: 1.1rem;
+}
+
+.card a {
+  text-decoration: none;
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+/* Mapa responsive */
+.ratio-16x9 iframe {
+  width: 100%;
+  height: 100%;
+}
+
+/* Espaciado y ajustes generales */
+.home-container {
+  font-family: 'Arial', sans-serif;
+}
+
+h2.text-danger {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #dc3545;
+}
