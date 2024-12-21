@@ -5,7 +5,7 @@ require('./config/Database'); // Conexión a la base de datos
 const vehiculosRoutes = require('./routes/vehiculos');
 const citasRoutes = require('./routes/citas');
 const clientesRoutes = require('./routes/clientes');
-const citasAdminRoutes = require('./routes/citasadmin'); // Importa la nueva ruta
+ // Importa la nueva ruta
 
 const app = express();
 
@@ -14,7 +14,7 @@ app.use(express.json());
 
 // Configuración de CORS global
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:3001',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -25,7 +25,7 @@ app.use(cors(corsOptions));
 app.use('/clientes', clientesRoutes);
 app.use('/vehiculos', vehiculosRoutes);
 app.use('/citas', citasRoutes);
-app.use('/citasadmin', citasAdminRoutes); // Agrega la ruta del panel de administración
+ // Agrega la ruta del panel de administración
 
 // Middleware de manejo de errores
 app.use((err, req, res, next) => {
