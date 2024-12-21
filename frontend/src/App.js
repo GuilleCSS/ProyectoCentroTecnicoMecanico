@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
-import Header from './components/header';
+import Header from './components/Header';
 import HamburgerMenu from './components/HamburgerMenu';
-import Home from './components/home';
+import Home from './components/Home';
 import AppointmentForm from './components/AppointmentForm';
-import RegisterForm from './components/registerform';
-import LoginForm from './components/loginform';
+import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';
+import AdminVehiculos from './components/AdminVehiculos';
+import AdminClientes from './components/AdminClientes';
 import './index.css';
 
 // Componente principal con detección de rutas
@@ -36,7 +38,8 @@ function AppContent() {
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/success" element={<RegistrationSuccess />} />
-
+        <Route path="/admin/vehiculos" element={<AdminVehiculos />} />
+        <Route path="/admin/clientes" element={<AdminClientes />} />
         {/* Rutas del administrador */}
         <Route path="/admin/citas" element={<AdminCitas />} />
         {/* Agrega más rutas de administración aquí */}

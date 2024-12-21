@@ -1,64 +1,47 @@
 const express = require('express');
-const Vehiculo = require('../models/vehiculo');
 const router = express.Router();
+const Vehiculo = require('../models/vehiculo');
 
-// Crear un vehículo
-router.post('/', async (req, res) => {
-  try {
-    const vehiculo = new Vehiculo(req.body);
-    await vehiculo.save();
-    res.status(201).send(vehiculo);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-// Leer todos los vehículos
+// Obtener todos los vehículos
 router.get('/', async (req, res) => {
   try {
-    const vehiculos = await Vehiculo.find().populate('cliente');
-    res.send(vehiculos);
+    const vehiculos = await Vehiculo.find().populate('cliente', 'nombre telefono');
+    res.status(200).json(vehiculos);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al obtener los vehículos', error });
   }
 });
 
-// Leer un vehículo por ID
-router.get('/:id', async (req, res) => {
+// Crear un nuevo vehículo
+router.post('/', async (req, res) => {
   try {
-    const vehiculo = await Vehiculo.findById(req.params.id).populate('cliente');
-    if (!vehiculo) {
-      return res.status(404).send({ error: 'Vehículo no encontrado' });
-    }
-    res.send(vehiculo);
+    const nuevoVehiculo = new Vehiculo(req.body);
+    const vehiculo = await nuevoVehiculo.save();
+    res.status(201).json(vehiculo);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al crear el vehículo', error });
   }
 });
 
-// Actualizar un vehículo por ID
+// Actualizar un vehículo
 router.put('/:id', async (req, res) => {
   try {
-    const vehiculo = await Vehiculo.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!vehiculo) {
-      return res.status(404).send({ error: 'Vehículo no encontrado' });
-    }
-    res.send(vehiculo);
+    const { id } = req.params;
+    const vehiculoActualizado = await Vehiculo.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json(vehiculoActualizado);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(500).json({ message: 'Error al actualizar el vehículo', error });
   }
 });
 
-// Eliminar un vehículo por ID
+// Eliminar un vehículo
 router.delete('/:id', async (req, res) => {
   try {
-    const vehiculo = await Vehiculo.findByIdAndDelete(req.params.id);
-    if (!vehiculo) {
-      return res.status(404).send({ error: 'Vehículo no encontrado' });
-    }
-    res.status(204).send();
+    const { id } = req.params;
+    await Vehiculo.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Vehículo eliminado correctamente' });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al eliminar el vehículo', error });
   }
 });
 

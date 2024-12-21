@@ -1,45 +1,47 @@
 const express = require('express');
-const Cliente = require('../models/cliente');
 const router = express.Router();
+const Cliente = require('../models/cliente');
 
-// Crear un cliente
-router.post('/', async (req, res) => {
+// Obtener todos los clientes
+router.get('/', async (req, res) => {
   try {
-    const cliente = new Cliente(req.body);
-    await cliente.save();
-    res.status(201).send(cliente);
+    const clientes = await Cliente.find().populate('vehiculos').populate('citas');
+    res.status(200).json(clientes);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(500).json({ message: 'Error al obtener los clientes', error });
   }
 });
 
-// Leer todos los clientes
-router.get('/', async (req, res) => {
+// Crear un nuevo cliente
+router.post('/', async (req, res) => {
   try {
-    const clientes = await Cliente.find().populate('vehiculos citas');
-    res.send(clientes);
+    const nuevoCliente = new Cliente(req.body);
+    const cliente = await nuevoCliente.save();
+    res.status(201).json(cliente);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al crear el cliente', error });
   }
 });
 
 // Actualizar un cliente
 router.put('/:id', async (req, res) => {
   try {
-    const cliente = await Cliente.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.send(cliente);
+    const { id } = req.params;
+    const clienteActualizado = await Cliente.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json(clienteActualizado);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(500).json({ message: 'Error al actualizar el cliente', error });
   }
 });
 
 // Eliminar un cliente
 router.delete('/:id', async (req, res) => {
   try {
-    await Cliente.findByIdAndDelete(req.params.id);
-    res.status(204).send();
+    const { id } = req.params;
+    await Cliente.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Cliente eliminado correctamente' });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al eliminar el cliente', error });
   }
 });
 

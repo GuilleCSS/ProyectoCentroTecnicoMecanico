@@ -1,83 +1,36 @@
 const express = require('express');
-const cors = require('cors'); // Importa el módulo de CORS
-const nodemailer = require('nodemailer'); // Importa Nodemailer
-require('./config/Database'); // Importa la conexión a la base de datos
+const cors = require('cors');
+require('./config/Database'); // Conexión a la base de datos
 
 const vehiculosRoutes = require('./routes/vehiculos');
 const citasRoutes = require('./routes/citas');
 const clientesRoutes = require('./routes/clientes');
+const citasAdminRoutes = require('./routes/citasadmin'); // Importa la nueva ruta
 
 const app = express();
 
-// Configuración del Middleware de Datos
-app.use(express.urlencoded({ extended: true })); // Permite el manejo de datos URL codificados
-app.use(express.json()); // Middleware para manejar JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Configuración de CORS
-const corsOptionsClientes = {
+// Configuración de CORS global
+const corsOptions = {
   origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
+app.use(cors(corsOptions));
 
-const corsOptionsVehiculos = {
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-};
+// Rutas de la API
+app.use('/clientes', clientesRoutes);
+app.use('/vehiculos', vehiculosRoutes);
+app.use('/citas', citasRoutes);
+app.use('/citasadmin', citasAdminRoutes); // Agrega la ruta del panel de administración
 
-const corsOptionsCitas = {
-  origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-};
-
-// Aplica el middleware de CORS con opciones específicas en cada ruta
-app.use('/clientes', cors(corsOptionsClientes), clientesRoutes);
-app.use('/vehiculos', cors(corsOptionsVehiculos), vehiculosRoutes);
-app.use('/citas', cors(corsOptionsCitas), citasRoutes);
-
-// Configuración de Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // Usamos Gmail como servicio
-  auth: {
-    user: process.env.EMAIL_USER, // Tu correo electrónico
-    pass: process.env.EMAIL_PASS, // Tu contraseña de correo
-  },
-});
-
-// Ruta para enviar el correo de confirmación
-app.post('/send-email', (req, res) => {
-  const { name, email, date, time, vehicleBrand, vehicleModel } = req.body;
-
-  const mailOptions = {
-    from: process.env.EMAIL_USER, // Tu correo electrónico
-    to: email, // El correo electrónico del cliente
-    subject: 'Confirmación de cita agendada',
-    text: `
-      Hola ${name},
-      
-      Tu cita ha sido agendada con éxito:
-      - Fecha: ${date}
-      - Hora: ${time}
-      - Marca del vehículo: ${vehicleBrand}
-      - Modelo del vehículo: ${vehicleModel}
-
-      ¡Gracias por confiar en nosotros!`,
-  };
-
-  transporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-      return res.status(500).send('Error al enviar el correo');
-    } else {
-      console.log('Correo enviado:', info.response);
-      return res.status(200).send('Correo de confirmación enviado');
-    }
-  });
+// Middleware de manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Ocurrió un error en el servidor' });
 });
 
 // Puerto

@@ -1,64 +1,49 @@
 const express = require('express');
-const Cita = require('../models/cita');
 const router = express.Router();
+const Cita = require('../models/cita');
 
-// Crear una cita
-router.post('/', async (req, res) => {
-  try {
-    const cita = new Cita(req.body);
-    await cita.save();
-    res.status(201).send(cita);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-// Leer todas las citas
+// Obtener todas las citas
 router.get('/', async (req, res) => {
   try {
-    const citas = await Cita.find().populate('cliente vehiculo');
-    res.send(citas);
+    const citas = await Cita.find()
+      .populate('cliente', 'nombre telefono') // Solo los campos necesarios de cliente
+      .populate('vehiculo', 'modelo marca placas'); // Solo los campos necesarios de vehículo
+    res.status(200).json(citas);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al obtener las citas', error });
   }
 });
 
-// Leer una cita por ID
-router.get('/:id', async (req, res) => {
+// Crear una nueva cita
+router.post('/', async (req, res) => {
   try {
-    const cita = await Cita.findById(req.params.id).populate('cliente vehiculo');
-    if (!cita) {
-      return res.status(404).send({ error: 'Cita no encontrada' });
-    }
-    res.send(cita);
+    const nuevaCita = new Cita(req.body);
+    const cita = await nuevaCita.save();
+    res.status(201).json(cita);
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al crear la cita', error });
   }
 });
 
-// Actualizar una cita por ID
+// Actualizar una cita
 router.put('/:id', async (req, res) => {
   try {
-    const cita = await Cita.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!cita) {
-      return res.status(404).send({ error: 'Cita no encontrada' });
-    }
-    res.send(cita);
+    const { id } = req.params;
+    const citaActualizada = await Cita.findByIdAndUpdate(id, req.body, { new: true });
+    res.status(200).json(citaActualizada);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(500).json({ message: 'Error al actualizar la cita', error });
   }
 });
 
-// Eliminar una cita por ID
+// Eliminar una cita
 router.delete('/:id', async (req, res) => {
   try {
-    const cita = await Cita.findByIdAndDelete(req.params.id);
-    if (!cita) {
-      return res.status(404).send({ error: 'Cita no encontrada' });
-    }
-    res.status(204).send();
+    const { id } = req.params;
+    await Cita.findByIdAndDelete(id);
+    res.status(200).json({ message: 'Cita eliminada correctamente' });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ message: 'Error al eliminar la cita', error });
   }
 });
 

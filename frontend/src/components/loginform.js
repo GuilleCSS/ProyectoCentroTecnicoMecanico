@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importar Link para navegación interna
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -43,7 +44,12 @@ const LoginForm = () => {
           <button type="submit" className="btn btn-success w-100">Iniciar sesión</button>
         </form>
         <div className="text-center mt-3">
-          <small>¿No tienes cuenta? <a href="#" className="text-success text-decoration-none">Regístrate</a></small>
+          <small>
+            ¿No tienes cuenta?{' '}
+            <Link to="/register" className="text-success text-decoration-none">
+              Regístrate
+            </Link>
+          </small>
         </div>
       </div>
     </div>
