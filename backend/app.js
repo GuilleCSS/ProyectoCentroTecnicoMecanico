@@ -5,6 +5,7 @@ require('./config/Database'); // Conexión a la base de datos
 const vehiculosRoutes = require('./routes/vehiculos');
 const citasRoutes = require('./routes/citas');
 const clientesRoutes = require('./routes/clientes');
+const sesionRoutes = require('./routes/iniciarsesion.js');
  // Importa la nueva ruta
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(cors(corsOptions));
 app.use('/clientes', clientesRoutes);
 app.use('/vehiculos', vehiculosRoutes);
 app.use('/citas', citasRoutes);
+app.use('/iniciarsesion', sesionRoutes);
  // Agrega la ruta del panel de administración
 
 // Middleware de manejo de errores

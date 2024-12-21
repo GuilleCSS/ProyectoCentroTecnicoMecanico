@@ -1,31 +1,47 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importar Link para navegación interna
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({ correo: '', password: '' });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Contraseña:', password);
+
+    try {
+      const response = await axios.post('http://localhost:3000/clientes/login', formData);
+      const { token } = response.data;
+
+      // Guardar el token en localStorage
+      localStorage.setItem('token', token);
+
+      alert('Inicio de sesión exitoso');
+      navigate('/appointment'); // Redirigir a la página para agendar citas
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error.response?.data?.message || error.message);
+      alert('Error al iniciar sesión.');
+    }
   };
 
   return (
     <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-      {/* Formulario */}
       <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="text-center mb-4">Iniciar sesión</h2>
+        <h2 className="text-center mb-4">Iniciar Sesión</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Correo electrónico</label>
+            <label htmlFor="correo" className="form-label">Correo Electrónico</label>
             <input
               type="email"
-              id="email"
+              id="correo"
               className="form-control"
-              placeholder="Ingrese su correo"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.correo}
+              onChange={handleChange}
               required
             />
           </div>
@@ -35,22 +51,13 @@ const LoginForm = () => {
               type="password"
               id="password"
               className="form-control"
-              placeholder="Ingrese su contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>
-          <button type="submit" className="btn btn-success w-100">Iniciar sesión</button>
+          <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
         </form>
-        <div className="text-center mt-3">
-          <small>
-            ¿No tienes cuenta?{' '}
-            <Link to="/register" className="text-success text-decoration-none">
-              Regístrate
-            </Link>
-          </small>
-        </div>
       </div>
     </div>
   );

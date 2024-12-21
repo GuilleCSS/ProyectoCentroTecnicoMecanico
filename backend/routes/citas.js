@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
 // Crear una nueva cita (requiere autenticación)
 router.post('/', authMiddleware, async (req, res) => {
   try {
+    // Verificar si ya existe una cita para el cliente en esa fecha
     const citaExistente = await Cita.findOne({
       cliente: req.user.id,
       fecha: req.body.fecha,

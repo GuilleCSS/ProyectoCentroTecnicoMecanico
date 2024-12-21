@@ -1,44 +1,82 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const RegisterForm = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    nombre: '',
+    telefono: '',
+    correo: '',
+    direccion: '',
+    password: '',
+  });
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Nombre:', name);
-    console.log('Email:', email);
-    console.log('Contraseña:', password);
+
+    try {
+      await axios.post('http://localhost:3000/clientes', formData);
+      alert('Registro exitoso');
+      navigate('/login'); // Redirige al login después del registro
+    } catch (error) {
+      console.error('Error al registrar cliente:', error.response?.data?.message || error.message);
+      alert(error.response?.data?.message || 'Error al registrar cliente.');
+    }
   };
 
   return (
     <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-      <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
+      <div className="card p-4 shadow-lg" style={{ maxWidth: '500px', width: '100%' }}>
         <h2 className="text-center mb-4">Registrarse</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">Nombre:</label>
+            <label htmlFor="nombre" className="form-label">Nombre:</label>
             <input
               type="text"
-              id="name"
+              id="nombre"
               className="form-control"
-              placeholder="Ingrese su nombre"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.nombre}
+              onChange={handleChange}
               required
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Email:</label>
+            <label htmlFor="telefono" className="form-label">Teléfono:</label>
+            <input
+              type="tel"
+              id="telefono"
+              className="form-control"
+              value={formData.telefono}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="correo" className="form-label">Correo Electrónico:</label>
             <input
               type="email"
-              id="email"
+              id="correo"
               className="form-control"
-              placeholder="Ingrese su correo"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.correo}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="direccion" className="form-label">Dirección:</label>
+            <input
+              type="text"
+              id="direccion"
+              className="form-control"
+              value={formData.direccion}
+              onChange={handleChange}
               required
             />
           </div>
@@ -48,9 +86,8 @@ const RegisterForm = () => {
               type="password"
               id="password"
               className="form-control"
-              placeholder="Ingrese su contraseña"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>

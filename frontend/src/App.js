@@ -7,7 +7,6 @@ import Home from './components/Home';
 import AppointmentForm from './components/AppointmentForm';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
-import RegistrationSuccess from './components/RegistrationSuccess';
 import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';
 import AdminVehiculos from './components/AdminVehiculos';
@@ -37,7 +36,6 @@ function AppContent() {
         <Route path="/appointment" element={<AppointmentForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/success" element={<RegistrationSuccess />} />
         <Route path="/admin/vehiculos" element={<AdminVehiculos />} />
         <Route path="/admin/clientes" element={<AdminClientes />} />
         {/* Rutas del administrador */}
