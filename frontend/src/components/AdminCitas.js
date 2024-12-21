@@ -2,109 +2,151 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const AdminCitas = () => {
-  const [citas, setCitas] = useState([]); // Estado para almacenar las citas
-  const [loading, setLoading] = useState(true); // Estado para manejar la carga
-  const [error, setError] = useState(null); // Estado para manejar errores
+  const [citas, setCitas] = useState([]); // Estado para almacenar citas
+  const [citaSeleccionada, setCitaSeleccionada] = useState(null); // Estado para la cita seleccionada
+  const [mostrarModal, setMostrarModal] = useState(false); // Estado para mostrar/ocultar el modal
 
-  // Obtener todas las citas del backend
+  // Obtener todas las citas al cargar el componente
   useEffect(() => {
     fetchCitas();
   }, []);
 
   const fetchCitas = async () => {
     try {
-      setLoading(true);
-      const response = await axios.get('http://localhost:3000/citasadmin'); // Asegúrate de que esta URL sea correcta
+      const response = await axios.get('http://localhost:3000/citas');
       setCitas(response.data);
-    } catch (err) {
-      console.error('Error al obtener las citas:', err);
-      setError('No se pudieron cargar las citas.');
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error('Error al obtener las citas:', error);
+    }
+  };
+
+  const handleActualizarCita = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/citas/${citaSeleccionada._id}`,
+        citaSeleccionada
+      );
+      setCitas(
+        citas.map((cita) =>
+          cita._id === citaSeleccionada._id ? response.data : cita
+        )
+      );
+      setMostrarModal(false); // Ocultar el modal después de actualizar
+    } catch (error) {
+      console.error('Error al actualizar la cita:', error);
     }
   };
 
   const handleEliminarCita = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/citasadmin/${id}`);
-      setCitas(citas.filter((cita) => cita._id !== id)); // Actualiza el estado después de eliminar
-    } catch (err) {
-      console.error('Error al eliminar la cita:', err);
-      alert('Hubo un error al intentar eliminar la cita.');
+      await axios.delete(`http://localhost:3000/citas/${id}`);
+      setCitas(citas.filter((cita) => cita._id !== id)); // Actualizar el estado local
+    } catch (error) {
+      console.error('Error al eliminar la cita:', error);
     }
   };
 
-  const handleCompletarCita = async (id) => {
-    try {
-      const updatedCita = await axios.put(`http://localhost:3000/citasadmin/${id}`, {
-        estado: 'Completada',
-      });
-      setCitas(citas.map((cita) => (cita._id === id ? updatedCita.data : cita))); // Actualiza el estado después de completar
-    } catch (err) {
-      console.error('Error al completar la cita:', err);
-      alert('Hubo un error al intentar completar la cita.');
-    }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCitaSeleccionada({ ...citaSeleccionada, [name]: value });
   };
 
-  if (loading) {
-    return <p className="text-center mt-4">Cargando citas...</p>;
-  }
+  const abrirModal = (cita) => {
+    setCitaSeleccionada(cita);
+    setMostrarModal(true);
+  };
 
-  if (error) {
-    return <p className="text-center mt-4 text-danger">{error}</p>;
-  }
+  const cerrarModal = () => {
+    setCitaSeleccionada(null);
+    setMostrarModal(false);
+  };
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">Gestión de Citas</h2>
-      {citas.length === 0 ? (
-        <p className="text-center">No hay citas registradas.</p>
-      ) : (
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Servicio</th>
-              <th>Estado</th>
-              <th>Cliente</th>
-              <th>Vehículo</th>
-              <th>Acciones</th>
+      <h2>Gestión de Citas</h2>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Servicio</th>
+            <th>Estado</th>
+            <th>Cliente</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {citas.map((cita) => (
+            <tr key={cita._id}>
+              <td>{new Date(cita.fecha).toLocaleString()}</td>
+              <td>{cita.servicio}</td>
+              <td>{cita.estado}</td>
+              <td>
+                {cita.cliente ? cita.cliente.nombre : 'Sin cliente asociado'}
+              </td>
+              <td>
+                <button
+                  className="btn btn-warning btn-sm me-2"
+                  onClick={() => abrirModal(cita)}
+                >
+                  Editar
+                </button>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => handleEliminarCita(cita._id)}
+                >
+                  Eliminar
+                </button>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {citas.map((cita) => (
-              <tr key={cita._id}>
-                <td>{new Date(cita.fecha).toLocaleString()}</td>
-                <td>{cita.servicio}</td>
-                <td>{cita.estado}</td>
-                <td>
-                  {cita.cliente
-                    ? `${cita.cliente.nombre} (${cita.cliente.telefono})`
-                    : 'Sin cliente'}
-                </td>
-                <td>
-                  {cita.vehiculo
-                    ? `${cita.vehiculo.marca} ${cita.vehiculo.modelo} (${cita.vehiculo.placas})`
-                    : 'Sin vehículo'}
-                </td>
-                <td>
-                  <button
-                    className="btn btn-danger btn-sm me-2"
-                    onClick={() => handleEliminarCita(cita._id)}
-                  >
-                    Eliminar
-                  </button>
-                  <button
-                    className="btn btn-success btn-sm"
-                    onClick={() => handleCompletarCita(cita._id)}
-                  >
-                    Completar
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
+
+      {/* Modal para actualizar estado de la cita */}
+      {mostrarModal && (
+        <div className="modal d-block" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Editar Cita</h5>
+                <button type="button" className="btn-close" onClick={cerrarModal}></button>
+              </div>
+              <div className="modal-body">
+                <form>
+                  <div className="mb-3">
+                    <label className="form-label">Estado</label>
+                    <select
+                      className="form-control"
+                      name="estado"
+                      value={citaSeleccionada.estado || ''}
+                      onChange={handleInputChange}
+                    >
+                      <option value="Pendiente">Pendiente</option>
+                      <option value="Completada">Completada</option>
+                      <option value="Cancelada">Cancelada</option>
+                    </select>
+                  </div>
+                </form>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={cerrarModal}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleActualizarCita}
+                >
+                  Guardar Cambios
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
