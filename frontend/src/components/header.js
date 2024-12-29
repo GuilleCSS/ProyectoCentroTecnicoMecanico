@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Header.css';
+import UserMenu from './UserMenu'; // Importa el componente de UserMenu
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false); // Estado del menú de hamburguesa
@@ -13,11 +14,7 @@ const Header = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-danger">
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
-          Centro Técnico de Autos
-        </Link>
-
-        {/* Icono de hamburguesa */}
+        {/* Icono de hamburguesa alineado a la izquierda */}
         <div
           className={`hamburger-icon ${isOpen ? 'open' : ''}`}
           onClick={toggleMenu}
@@ -27,6 +24,10 @@ const Header = () => {
           <div className="bar"></div>
         </div>
 
+        <Link className="navbar-brand fw-bold" to="/">
+          Centro Técnico de Autos
+        </Link>
+
         {/* Menú colapsable */}
         <div
           className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`}
@@ -35,25 +36,31 @@ const Header = () => {
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
               <Link className="nav-link text-white fw-semibold" to="/login">
-                Iniciar sesión
+                
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link text-white fw-semibold" to="/register">
-                Registrarse
+                
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link text-white fw-semibold" to="/appointment">
-                Agendar cita
+                
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link text-white fw-semibold" to="/admin/citas">
-                Administrador
+                
               </Link>
             </li>
           </ul>
+        </div>
+
+        {/* UserMenu alineado a la parte superior derecha */}
+        <div className="navbar-right">
+          {/* Incluimos el componente UserMenu */}
+          <UserMenu />
         </div>
       </div>
     </nav>

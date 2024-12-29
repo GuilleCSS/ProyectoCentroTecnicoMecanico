@@ -33,7 +33,8 @@ const AppointmentForm = () => {
     }
 
     try {
-      const response = await axios.post(
+      // Eliminamos la variable 'response' ya que no la utilizamos
+      await axios.post(
         'http://localhost:3000/citas',
         { ...formData, fechaHora: `${formData.fecha}T${formData.hora}` },
         {

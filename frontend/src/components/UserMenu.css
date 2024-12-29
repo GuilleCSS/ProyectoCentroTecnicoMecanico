@@ -1,0 +1,52 @@
+/* Estilo para el ícono de usuario */
+.user-menu {
+    position: relative; /* Aseguramos que el dropdown se posicione correctamente */
+  }
+  
+  .user-icon {
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  /* Estilos para el dropdown */
+  .dropdown-menu {
+    position: absolute;
+    top: 35px; /* Ajusta la distancia entre el ícono y el dropdown */
+    right: 0;
+    background-color: #ffffff; /* Fondo blanco */
+    color: #333; /* Color del texto */
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    width: 180px; /* Ancho fijo del menú */
+    padding: 5px 0;
+    z-index: 1000;
+    border: 1px solid #ddd; /* Borde suave */
+    display: none; /* Inicialmente oculto */
+  }
+  
+  .dropdown-item {
+    color: #333;
+    padding: 10px 20px;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #f1f1f1; /* Color de fondo al pasar el cursor */
+  }
+  
+  .dropdown-menu.show {
+    display: block; /* Mostrar el dropdown cuando esté activo */
+  }
+  
+  .dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -10px; /* Posición del triángulo hacia arriba */
+    right: 15px; /* Alineación con el centro del dropdown */
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #ffffff; /* Color del triángulo */
+  }
+  

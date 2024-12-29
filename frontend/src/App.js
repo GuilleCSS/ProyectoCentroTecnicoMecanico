@@ -13,6 +13,7 @@ import AdminVehiculos from './components/AdminVehiculos';
 import AdminClientes from './components/AdminClientes';
 import PrivateRoute from './components/PrivateRoute'; // Componente para proteger rutas privadas
 import VehicleTracking from './components/VehicleTracking'; // Asegúrate de importar VehicleTracking
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 
 // Componente principal con detección de rutas

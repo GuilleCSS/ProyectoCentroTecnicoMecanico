@@ -6,6 +6,16 @@ import './Home.css';
 const Home = () => {
   const navigate = useNavigate();
 
+  // Función para redirigir al login o a la página de citas
+  const handleAppointmentClick = () => {
+    const token = localStorage.getItem('auth_token'); // Verificar si el usuario está autenticado
+    if (token) {
+      navigate('/appointment'); // Si está autenticado, redirigir a la página de agendar cita
+    } else {
+      navigate('/login'); // Si no está autenticado, redirigir al login
+    }
+  };
+
   const handleAdminClick = () => {
     const token = localStorage.getItem('auth_token'); // Verificar si el usuario está autenticado
     if (token) {
@@ -39,9 +49,13 @@ const Home = () => {
               <Link className="nav-link text-white" to="/register">Registrarse</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/appointment">Agendar cita</Link>
+              <button
+                className="nav-link text-white btn btn-link"
+                onClick={handleAppointmentClick} // Verifica si el usuario está autenticado antes de redirigir
+              >
+                Agendar cita
+              </button>
             </li>
-            {/* Agregar el enlace para el administrador */}
             <li className="nav-item">
               <button
                 className="nav-link text-white btn btn-link"
@@ -140,12 +154,52 @@ const Home = () => {
 
       {/* Botón de Agendar Cita */}
       <section className="text-center mb-5">
-        <Link
-          to="/appointment"
+        <button
+          onClick={handleAppointmentClick} // Verifica si el usuario está autenticado antes de redirigir
           className="btn btn-danger btn-lg px-5 py-3 shadow-sm fw-bold text-uppercase"
         >
           Agendar una Cita
-        </Link>
+        </button>
+      </section>
+
+      {/* Sección nueva: Contacto */}
+      <section className="bg-dark text-white py-5">
+        <div className="container">
+          <div className="row text-center">
+            {/* Columna "Nosotros" */}
+            <div className="col-md-4 mb-4">
+              <h4 className="text-uppercase">Nosotros</h4>
+              <p>Somos un taller automotriz de excelencia ubicado en la primera manzana m 327 colonia Plutarco Elías en Pachuca de Soto, Hidalgo.</p>
+              <Link to="/join" className="btn btn-outline-light">Únete a nosotros</Link>
+            </div>
+            {/* Columna "Nuestros Servicios" */}
+            <div className="col-md-4 mb-4">
+              <h4 className="text-uppercase">Nuestros Servicios</h4>
+              <ul className="list-unstyled">
+                <li>Diagnóstico OBD II</li>
+                <li>Falla Motor</li>
+                <li>Servicio de lavado</li>
+                <li>Batería baja</li>
+                <li>Cambio de balatas</li>
+              </ul>
+            </div>
+            {/* Columna "Síguenos" */}
+            <div className="col-md-4 mb-4">
+              <h4 className="text-uppercase">Síguenos</h4>
+              <div>
+                <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-white me-3">
+                  <i className="fab fa-whatsapp fa-2x"></i>
+                </a>
+                <a href="https://facebook.com/" target="_blank" rel="noreferrer" className="text-white me-3">
+                  <i className="fab fa-facebook fa-2x"></i>
+                </a>
+                <a href="tel:+15551234567" className="text-white">
+                  <i className="fas fa-phone fa-2x"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

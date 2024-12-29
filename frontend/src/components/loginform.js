@@ -20,17 +20,17 @@ const LoginForm = () => {
       // Guarda un token en localStorage para simular que el usuario está autenticado
       localStorage.setItem('auth_token', 'valid_token');
 
-      // Redirige al panel de administración
-      navigate('/admin');
+      // Redirige al panel de administración o a la página de citas
+      navigate('/appointment');
     } else {
       alert('Correo o contraseña incorrectos');
     }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-      <div className="login-form shadow-lg p-4 rounded bg-white" style={{ width: '100%', maxWidth: '400px' }}>
-        <h2 className="text-center mb-4">Iniciar sesión</h2>
+    <div className="login-container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <div className="login-form shadow-lg p-4 rounded bg-white">
+        <h2 className="text-center mb-4">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Correo electrónico</label>
@@ -56,6 +56,11 @@ const LoginForm = () => {
           </div>
           <button type="submit" className="btn btn-primary w-100">Iniciar sesión</button>
         </form>
+        <div className="mt-3 text-center">
+          <p>
+            ¿No tienes cuenta? <span onClick={() => navigate('/register')} className="text-danger cursor-pointer">Regístrate aquí</span>
+          </p>
+        </div>
       </div>
     </div>
   );
