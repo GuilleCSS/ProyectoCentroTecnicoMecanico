@@ -7,11 +7,10 @@ const AdminHeader = () => {
   const navigate = useNavigate(); // Hook para redireccionar
 
   const handleLogout = () => {
-    // Lógica para cerrar sesión (opcional: eliminar tokens, limpiar estado, etc.)
+    // Lógica para cerrar sesión: eliminar el token o limpiar el estado
     console.log('Cerrando sesión...');
-    
-    // Redireccionar al Home
-    navigate('/');
+    localStorage.removeItem('auth_token'); // Eliminar el token de autenticación
+    navigate('/login'); // Redireccionar al login
   };
 
   return (
@@ -38,11 +37,9 @@ const AdminHeader = () => {
               </Link>
             </li>
             <li className="nav-item">
-              {/* Botón para cerrar sesión */}
               <button
                 className="btn btn-link nav-link text-white fw-semibold"
                 onClick={handleLogout}
-                style={{ textDecoration: 'none' }}
               >
                 Cerrar sesión
               </button>

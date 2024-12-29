@@ -25,6 +25,8 @@ const HamburgerMenu = () => {
           <li><Link to="/appointment">Agendar Cita</Link></li>
           <li><Link to="/register">Registro</Link></li>
           <li><Link to="/login">Login</Link></li>
+          {/* Nueva opción para el estado del vehículo */}
+          <li><Link to="/vehicle-status">Estado de mi vehículo</Link></li> {/* Verifica que esté aquí */}
         </ul>
       </div>
     </div>

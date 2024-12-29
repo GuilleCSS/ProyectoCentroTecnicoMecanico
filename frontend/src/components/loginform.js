@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de que Bootstrap esté importado
+import './LoginForm.css'; // Si tienes tu archivo de estilos personalizados
 
 const LoginForm = () => {
-  const [formData, setFormData] = useState({ correo: '', password: '' });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:3000/clientes/login', formData);
-      const { token } = response.data;
+    // Correo y contraseña predeterminados para la prueba
+    const validEmail = 'admin@example.com';
+    const validPassword = 'admin123';
 
-      // Guardar el token en localStorage
-      localStorage.setItem('token', token);
+    // Verifica si el correo y la contraseña son correctos
+    if (email === validEmail && password === validPassword) {
+      // Guarda un token en localStorage para simular que el usuario está autenticado
+      localStorage.setItem('auth_token', 'valid_token');
 
-      alert('Inicio de sesión exitoso');
-      navigate('/appointment'); // Redirigir a la página para agendar citas
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error.response?.data?.message || error.message);
-      alert('Error al iniciar sesión.');
+      // Redirige al panel de administración
+      navigate('/admin');
+    } else {
+      alert('Correo o contraseña incorrectos');
     }
   };
 
   return (
-    <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center bg-light">
-      <div className="card p-4 shadow-lg" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="text-center mb-4">Iniciar Sesión</h2>
+    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <div className="login-form shadow-lg p-4 rounded bg-white" style={{ width: '100%', maxWidth: '400px' }}>
+        <h2 className="text-center mb-4">Iniciar sesión</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="correo" className="form-label">Correo Electrónico</label>
+            <label htmlFor="email" className="form-label">Correo electrónico</label>
             <input
               type="email"
-              id="correo"
+              id="email"
               className="form-control"
-              value={formData.correo}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -51,12 +49,12 @@ const LoginForm = () => {
               type="password"
               id="password"
               className="form-control"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
+          <button type="submit" className="btn btn-primary w-100">Iniciar sesión</button>
         </form>
       </div>
     </div>

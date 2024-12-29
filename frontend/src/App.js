@@ -11,6 +11,8 @@ import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';
 import AdminVehiculos from './components/AdminVehiculos';
 import AdminClientes from './components/AdminClientes';
+import PrivateRoute from './components/PrivateRoute'; // Componente para proteger rutas privadas
+import VehicleTracking from './components/VehicleTracking'; // Asegúrate de importar VehicleTracking
 import './index.css';
 
 // Componente principal con detección de rutas
@@ -36,11 +38,15 @@ function AppContent() {
         <Route path="/appointment" element={<AppointmentForm />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/admin/vehiculos" element={<AdminVehiculos />} />
-        <Route path="/admin/clientes" element={<AdminClientes />} />
-        {/* Rutas del administrador */}
-        <Route path="/admin/citas" element={<AdminCitas />} />
-        {/* Agrega más rutas de administración aquí */}
+
+        {/* Ruta para el estado del vehículo */}
+        <Route path="/vehicle-status" element={<VehicleTracking />} /> {/* Asegúrate de que esté incluida */}
+
+        {/* Rutas del administrador protegidas */}
+        <Route path="/admin" element={<PrivateRoute element={<AdminHeader />} />} />
+        <Route path="/admin/citas" element={<PrivateRoute element={<AdminCitas />} />} />
+        <Route path="/admin/vehiculos" element={<PrivateRoute element={<AdminVehiculos />} />} />
+        <Route path="/admin/clientes" element={<PrivateRoute element={<AdminClientes />} />} />
       </Routes>
     </div>
   );

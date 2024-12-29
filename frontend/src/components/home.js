@@ -1,9 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleAdminClick = () => {
+    const token = localStorage.getItem('auth_token'); // Verificar si el usuario está autenticado
+    if (token) {
+      navigate('/admin'); // Redirigir al panel de administración si está autenticado
+    } else {
+      navigate('/login'); // Si no está autenticado, redirigir al formulario de inicio de sesión
+    }
+  };
+
   return (
     <div className="home-container">
       {/* Barra de Navegación */}
@@ -25,13 +36,19 @@ const Home = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/login">Iniciar sesión</Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link text-white" to="/register">Registrarse</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link text-white" to="/appointment">Agendar cita</Link>
+            </li>
+            {/* Agregar el enlace para el administrador */}
+            <li className="nav-item">
+              <button
+                className="nav-link text-white btn btn-link"
+                onClick={handleAdminClick} // Redirige al login si no está autenticado
+              >
+                Administrador
+              </button>
             </li>
           </ul>
         </div>
