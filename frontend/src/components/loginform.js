@@ -1,39 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Asegúrate de que Bootstrap esté importado
-import './LoginForm.css'; // Si tienes tu archivo de estilos personalizados
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './LoginForm.css';
+import axios from 'axios';
+import { AuthContext } from '../AuthContext';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login } = useContext(AuthContext); // Contexto de autenticación
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Correo y contraseña predeterminados para la prueba
-    const validEmail = 'admin@example.com';
-    const validPassword = 'admin123';
+    try {
+      // Inicio de sesión del administrador (admin1@admin.com)
+      if (email === 'admin1@admin.com' && password === 'admin123') {
+        const response = await axios.post('http://localhost:3000/adminroute/admin-login', { correo: email, password });
+        localStorage.setItem('auth_token', response.data.token); // Almacena el token válido
+        login(response.data.user, response.data.token); // Actualiza el contexto de autenticación
+        window.location.href = 'http://localhost:3001/admin/citas'; // Redirige al panel de administrador
+        return;
+      }
 
-    // Verifica si el correo y la contraseña son correctos
-    if (email === validEmail && password === validPassword) {
-      // Guarda un token en localStorage para simular que el usuario está autenticado
-      localStorage.setItem('auth_token', 'valid_token');
-
-      // Redirige al panel de administración o a la página de citas
-      navigate('/appointment');
-    } else {
-      alert('Correo o contraseña incorrectos');
+      // Inicio de sesión del cliente
+      const response = await axios.post('http://localhost:3000/clientes/login', { correo: email, password });
+      login(response.data.user, response.data.token); // Establece el usuario y token en el contexto
+      navigate('/appointment'); // Redirige a la página de citas
+    } catch (error) {
+      setError(error.response?.data?.message || 'Correo o contraseña incorrectos');
     }
   };
 
   return (
     <div className="login-container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <div className="login-form shadow-lg p-4 rounded bg-white">
-        <h2 className="text-center mb-4">Login</h2>
+        <h2 className="text-center mb-4">Iniciar Sesión</h2>
+        {error && <div className="alert alert-danger text-center">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label htmlFor="email" className="form-label">Correo electrónico</label>
+            <label htmlFor="email" className="form-label">Correo Electrónico</label>
             <input
               type="email"
               id="email"
@@ -54,11 +62,14 @@ const LoginForm = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary w-100">Iniciar sesión</button>
+          <button type="submit" className="btn btn-primary w-100">Iniciar Sesión</button>
         </form>
         <div className="mt-3 text-center">
           <p>
-            ¿No tienes cuenta? <span onClick={() => navigate('/register')} className="text-danger cursor-pointer">Regístrate aquí</span>
+            ¿No tienes cuenta?{' '}
+            <span onClick={() => navigate('/register')} className="text-danger cursor-pointer">
+              Regístrate aquí
+            </span>
           </p>
         </div>
       </div>

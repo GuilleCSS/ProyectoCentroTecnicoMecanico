@@ -1,24 +1,22 @@
-/* Estilo para el ícono de hamburguesa */
 .hamburger-icon {
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-right: 20px; /* Espacio entre el ícono y el texto */
+  gap: 5px;
+  margin-right: 20px;
+  z-index: 1100;
 }
 
-/* El ícono de las barras */
 .hamburger-icon .bar {
-  width: 25px;
+  width: 30px;
   height: 3px;
   background-color: white;
   border-radius: 3px;
-  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Cuando el menú está abierto */
 .hamburger-icon.open .bar:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
+  transform: translateY(8px) rotate(45deg);
 }
 
 .hamburger-icon.open .bar:nth-child(2) {
@@ -26,79 +24,85 @@
 }
 
 .hamburger-icon.open .bar:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-8px) rotate(-45deg);
 }
-
-/* Estilo de la barra de navegación */
+/* Estilo para la barra de navegación */
 .navbar {
   display: flex;
-  justify-content: space-between; /* Alinea los elementos de la izquierda a la derecha */
+  justify-content: space-between; /* Elementos distribuidos a los lados */
   align-items: center;
+  padding: 10px 20px;
 }
 
-/* Aseguramos que el UserMenu se alinee a la derecha */
+/* Contenedor del menú derecho */
 .navbar-right {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Esto empuja el UserMenu a la derecha */
+  margin-left: auto; /* Empuja los elementos hacia la derecha */
 }
 
-/* Estilo para el ícono de usuario */
+/* Estilo del ícono de usuario */
 .user-menu {
-  position: relative; /* Aseguramos que el dropdown se posicione correctamente */
+  position: relative;
 }
 
 .user-icon {
+  width: 40px;
+  height: 40px;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png'); /* Imagen genérica */
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
   cursor: pointer;
-  margin-left: 10px;
 }
 
-/* Estilos para el dropdown */
+/* Dropdown del menú */
 .dropdown-menu {
   position: absolute;
-  top: 35px; /* Ajusta la distancia entre el ícono y el dropdown */
+  top: 50px;
   right: 0;
-  background-color: #ffffff; /* Fondo blanco */
-  color: #333; /* Color del texto */
+  background-color: #ffffff;
+  color: #333;
   border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  width: 180px; /* Ancho fijo del menú */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
   padding: 5px 0;
   z-index: 1000;
-  border: 1px solid #ddd; /* Borde suave */
+  border: 1px solid #ddd;
   display: none; /* Inicialmente oculto */
 }
 
 .dropdown-item {
   color: #333;
   padding: 10px 20px;
-  text-align: left;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-item:hover {
-  background-color: #f1f1f1; /* Color de fondo al pasar el cursor */
+  background-color: #f1f1f1;
 }
 
+/* Mostrar dropdown al activar */
 .dropdown-menu.show {
-  display: block; /* Mostrar el dropdown cuando esté activo */
+  display: block;
 }
 
+/* Flecha del dropdown */
 .dropdown-menu::before {
   content: '';
   position: absolute;
-  top: -10px; /* Posición del triángulo hacia arriba */
-  right: 15px; /* Alineación con el centro del dropdown */
+  top: -10px;
+  right: 20px;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #ffffff; /* Color del triángulo */
+  border-bottom: 10px solid #ffffff;
 }
 
-/* Ajustes para el menú colapsable */
+/* Menú colapsable */
 .navbar-collapse {
   display: flex;
-  justify-content: flex-end; /* Alinea los elementos del menú a la derecha */
+  justify-content: flex-end;
 }
 
 .navbar-nav {
@@ -108,4 +112,19 @@
 
 .navbar-nav .nav-item {
   padding: 0 10px;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .navbar-nav {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    top: 45px;
+    left: 0;
+    right: 0;
+  }
 }

@@ -13,18 +13,27 @@ const AdminCitas = () => {
 
   const fetchCitas = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/citas');
+      const token = localStorage.getItem('auth_token'); // Obtiene el token del localStorage
+      const response = await axios.get('http://localhost:3000/citas', {
+        headers: { Authorization: `Bearer ${token}` }, // Incluye el token en los encabezados
+      });
       setCitas(response.data);
     } catch (error) {
       console.error('Error al obtener las citas:', error);
+      if (error.response?.status === 401) {
+        alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/login'; // Redirige al formulario de inicio de sesión
+      }
     }
   };
 
   const handleActualizarCita = async () => {
     try {
+      const token = localStorage.getItem('auth_token');
       const response = await axios.put(
         `http://localhost:3000/citas/${citaSeleccionada._id}`,
-        citaSeleccionada
+        citaSeleccionada,
+        { headers: { Authorization: `Bearer ${token}` } } // Incluye el token
       );
       setCitas(
         citas.map((cita) =>
@@ -34,15 +43,26 @@ const AdminCitas = () => {
       setMostrarModal(false); // Ocultar el modal después de actualizar
     } catch (error) {
       console.error('Error al actualizar la cita:', error);
+      if (error.response?.status === 401) {
+        alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/login';
+      }
     }
   };
 
   const handleEliminarCita = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/citas/${id}`);
+      const token = localStorage.getItem('auth_token');
+      await axios.delete(`http://localhost:3000/citas/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }, // Incluye el token
+      });
       setCitas(citas.filter((cita) => cita._id !== id)); // Actualizar el estado local
     } catch (error) {
       console.error('Error al eliminar la cita:', error);
+      if (error.response?.status === 401) {
+        alert('Sesión expirada. Por favor, inicia sesión nuevamente.');
+        window.location.href = '/login';
+      }
     }
   };
 

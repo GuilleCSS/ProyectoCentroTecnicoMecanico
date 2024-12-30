@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Vehiculo = require('../models/vehiculo');
+const Cliente = require('../models/cliente');
+const autenticarToken = require('../middlewares/auth');
 
 // Obtener todos los vehículos
 router.get('/', async (req, res) => {
@@ -12,14 +14,46 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Crear un nuevo vehículo
-router.post('/', async (req, res) => {
+// Crear o actualizar un vehículo
+// Crear o actualizar un vehículo
+router.post('/', autenticarToken, async (req, res) => {
+  const { numeroSerie, modelo, año, marca, placas } = req.body;
+
   try {
-    const nuevoVehiculo = new Vehiculo(req.body);
-    const vehiculo = await nuevoVehiculo.save();
-    res.status(201).json(vehiculo);
+    // Verifica si el vehículo ya existe en la base de datos por su numeroSerie
+    let vehiculo = await Vehiculo.findOne({ numeroSerie });
+
+    if (!vehiculo) {
+      // Si no existe, crea un nuevo vehículo asociado al cliente autenticado
+      vehiculo = new Vehiculo({
+        numeroSerie,
+        modelo,
+        año,
+        marca,
+        placas,
+        cliente: req.user.id, // Asocia el vehículo al cliente autenticado
+      });
+      const nuevoVehiculo = await vehiculo.save();
+
+      // Actualiza el cliente para agregar el vehículo al array 'vehiculos'
+      await Cliente.findByIdAndUpdate(req.user.id, {
+        $push: { vehiculos: nuevoVehiculo._id },
+      });
+
+      return res.status(201).json({ vehiculoId: nuevoVehiculo._id, message: 'Vehículo creado correctamente.' });
+    }
+
+    // Si ya existe, actualiza los datos del vehículo
+    vehiculo.modelo = modelo;
+    vehiculo.año = año;
+    vehiculo.marca = marca;
+    vehiculo.placas = placas;
+    await vehiculo.save();
+
+    res.status(200).json({ vehiculoId: vehiculo._id, message: 'Vehículo actualizado correctamente.' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear el vehículo', error });
+    console.error('Error al procesar el vehículo:', error);
+    res.status(500).json({ message: 'Error al procesar el vehículo.', error });
   }
 });
 

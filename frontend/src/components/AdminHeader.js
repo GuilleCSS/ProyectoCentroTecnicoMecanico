@@ -7,10 +7,16 @@ const AdminHeader = () => {
   const navigate = useNavigate(); // Hook para redireccionar
 
   const handleLogout = () => {
-    // Lógica para cerrar sesión: eliminar el token o limpiar el estado
     console.log('Cerrando sesión...');
-    localStorage.removeItem('auth_token'); // Eliminar el token de autenticación
-    navigate('/login'); // Redireccionar al login
+
+    // Elimina todos los datos relacionados con la sesión
+    localStorage.removeItem('auth_token'); // Eliminar token
+    localStorage.removeItem('user'); // Eliminar cualquier información de usuario almacenada
+    sessionStorage.clear(); // Limpiar cualquier dato en sessionStorage si es usado
+
+    // Opcional: Limpia estados globales o contextos si los utilizas
+    navigate('/'); // Redirige al home
+    window.location.reload(); // Refresca la página para garantizar que el estado global se reinicie
   };
 
   return (

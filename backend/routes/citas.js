@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Cita = require('../models/cita');
-const authMiddleware = require('../middlewares/auth');
+const Cliente = require('../models/cliente');
+const Vehiculo = require('../models/vehiculo');
+const autenticarToken = require('../middlewares/auth');
 
 // Ver citas (sin autenticación)
 router.get('/', async (req, res) => {
@@ -15,26 +17,36 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Crear una nueva cita (requiere autenticación)
-router.post('/', authMiddleware, async (req, res) => {
+// Endpoint protegido para registrar una cita
+router.post('/generar', autenticarToken, async (req, res) => {
+  const { fecha, servicio, vehiculoId } = req.body;
+
   try {
-    // Verificar si ya existe una cita para el cliente en esa fecha
-    const citaExistente = await Cita.findOne({
-      cliente: req.user.id,
-      fecha: req.body.fecha,
-    });
-    if (citaExistente) {
-      return res.status(400).json({ message: 'Ya tienes una cita para esta fecha.' });
+    // Verifica si el vehículo existe y pertenece al cliente autenticado
+    const vehiculo = await Vehiculo.findOne({ _id: vehiculoId, cliente: req.user.id });
+    if (!vehiculo) {
+      return res.status(404).json({ message: 'El vehículo no pertenece al cliente autenticado.' });
     }
 
+    // Crear la cita asociada al vehículo y al cliente autenticado
     const nuevaCita = new Cita({
-      ...req.body,
-      cliente: req.user.id, // Asigna automáticamente el ID del cliente autenticado
+      fecha,
+      servicio,
+      cliente: req.user.id, // Asociar la cita al cliente autenticado
+      vehiculo: vehiculo._id, // Asociar la cita al vehículo
     });
-    const cita = await nuevaCita.save();
-    res.status(201).json(cita);
+
+    const citaCreada = await nuevaCita.save();
+
+    // Actualiza el cliente para agregar la cita al array 'citas'
+    await Cliente.findByIdAndUpdate(req.user.id, {
+      $push: { citas: citaCreada._id },
+    });
+
+    res.status(201).json({ message: 'Cita registrada exitosamente.', cita: citaCreada });
   } catch (error) {
-    res.status(500).json({ message: 'Error al crear la cita', error });
+    console.error('Error al registrar la cita:', error);
+    res.status(500).json({ message: 'Error al registrar la cita.', error });
   }
 });
 

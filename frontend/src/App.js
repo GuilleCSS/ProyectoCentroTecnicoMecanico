@@ -1,18 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
+import Header from './components/header';
 import HamburgerMenu from './components/HamburgerMenu';
-import Home from './components/Home';
+import Home from './components/home';
 import AppointmentForm from './components/AppointmentForm';
 import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/LoginForm';
+import LoginForm from './components/loginform';
 import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';
 import AdminVehiculos from './components/AdminVehiculos';
 import AdminClientes from './components/AdminClientes';
 import PrivateRoute from './components/PrivateRoute'; // Componente para proteger rutas privadas
 import VehicleTracking from './components/VehicleTracking'; // Asegúrate de importar VehicleTracking
+import ThankYouPage from './components/ThankYou'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 
@@ -48,6 +49,7 @@ function AppContent() {
         <Route path="/admin/citas" element={<PrivateRoute element={<AdminCitas />} />} />
         <Route path="/admin/vehiculos" element={<PrivateRoute element={<AdminVehiculos />} />} />
         <Route path="/admin/clientes" element={<PrivateRoute element={<AdminClientes />} />} />
+        <Route path="/thank-you" element={<ThankYouPage />} />
       </Routes>
     </div>
   );

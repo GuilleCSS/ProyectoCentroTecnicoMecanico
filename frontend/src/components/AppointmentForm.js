@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { AuthContext } from '../AuthContext';
 
 const AppointmentForm = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ const AppointmentForm = () => {
     hora: '',
     servicio: '',
   });
-
+  const { isAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,38 +25,45 @@ const AppointmentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated) {
       alert('Debes iniciar sesión para agendar una cita.');
       navigate('/login');
       return;
     }
 
     try {
-      // Eliminamos la variable 'response' ya que no la utilizamos
-      await axios.post(
-        'http://localhost:3000/citas',
-        { ...formData, fechaHora: `${formData.fecha}T${formData.hora}` },
+      // Crear o actualizar el vehículo
+      const vehiculoResponse = await axios.post(
+        'http://localhost:3000/vehiculos',
         {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+          numeroSerie: formData.numeroSerie,
+          marca: formData.marca,
+          modelo: formData.modelo,
+          año: formData.año,
+          placas: formData.placas,
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('auth_token')}` } }
       );
-      alert('Cita registrada exitosamente');
-      navigate('/success');
+
+      const vehiculoId = vehiculoResponse.data.vehiculoId;
+
+      // Crear la cita
+      await axios.post(
+        'http://localhost:3000/citas/generar',
+        {
+          fecha: `${formData.fecha}T${formData.hora}`,
+          servicio: formData.servicio,
+          vehiculoId: vehiculoId,
+        },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('auth_token')}` } }
+      );
+
+      // Redirigir a la página de agradecimiento
+      navigate('/thank-you');
     } catch (error) {
       console.error('Error al registrar la cita:', error.response?.data?.message || error.message);
       alert('Error al registrar la cita');
     }
-  };
-
-  // Generar horarios disponibles (de 8:00 AM a 6:00 PM en intervalos de 1 hora)
-  const generateHours = () => {
-    const hours = [];
-    for (let i = 8; i <= 18; i++) {
-      const hour = i.toString().padStart(2, '0') + ':00';
-      hours.push(hour);
-    }
-    return hours;
   };
 
   return (
@@ -64,9 +71,8 @@ const AppointmentForm = () => {
       <div className="card p-4 shadow-lg" style={{ maxWidth: '600px', width: '100%' }}>
         <h2 className="text-center mb-4">Agendar Cita</h2>
         <form onSubmit={handleSubmit}>
-          {/* Datos del vehículo */}
           <div className="mb-3">
-            <label htmlFor="numeroSerie" className="form-label">Número de Serie:</label>
+            <label htmlFor="numeroSerie" className="form-label">Número de Serie</label>
             <input
               type="text"
               id="numeroSerie"
@@ -77,7 +83,7 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="marca" className="form-label">Marca:</label>
+            <label htmlFor="marca" className="form-label">Marca</label>
             <input
               type="text"
               id="marca"
@@ -88,7 +94,7 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="modelo" className="form-label">Modelo:</label>
+            <label htmlFor="modelo" className="form-label">Modelo</label>
             <input
               type="text"
               id="modelo"
@@ -99,7 +105,7 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="año" className="form-label">Año:</label>
+            <label htmlFor="año" className="form-label">Año</label>
             <input
               type="number"
               id="año"
@@ -110,7 +116,7 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="placas" className="form-label">Placas:</label>
+            <label htmlFor="placas" className="form-label">Placas</label>
             <input
               type="text"
               id="placas"
@@ -120,10 +126,8 @@ const AppointmentForm = () => {
               required
             />
           </div>
-
-          {/* Fecha y Hora */}
           <div className="mb-3">
-            <label htmlFor="fecha" className="form-label">Fecha:</label>
+            <label htmlFor="fecha" className="form-label">Fecha</label>
             <input
               type="date"
               id="fecha"
@@ -134,7 +138,7 @@ const AppointmentForm = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="hora" className="form-label">Hora:</label>
+            <label htmlFor="hora" className="form-label">Hora</label>
             <select
               id="hora"
               className="form-select"
@@ -143,17 +147,15 @@ const AppointmentForm = () => {
               required
             >
               <option value="">Seleccione una hora</option>
-              {generateHours().map((hour) => (
+              {['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'].map((hour) => (
                 <option key={hour} value={hour}>
                   {hour}
                 </option>
               ))}
             </select>
           </div>
-
-          {/* Servicio */}
           <div className="mb-3">
-            <label htmlFor="servicio" className="form-label">Servicio:</label>
+            <label htmlFor="servicio" className="form-label">Servicio</label>
             <input
               type="text"
               id="servicio"

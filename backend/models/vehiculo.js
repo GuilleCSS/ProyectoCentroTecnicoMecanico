@@ -1,4 +1,4 @@
-const mongoose = require('mongoose'); // Asegúrate de importar mongoose
+const mongoose = require('mongoose');
 
 const vehiculoSchema = new mongoose.Schema({
   numeroSerie: { type: String, required: true, unique: true },
@@ -6,9 +6,7 @@ const vehiculoSchema = new mongoose.Schema({
   año: Number,
   marca: String,
   placas: String,
-  kilometraje: Number,
-  estado: String,
-  cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente' }
+  cliente: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
 });
 
 module.exports = mongoose.model('Vehiculo', vehiculoSchema);
