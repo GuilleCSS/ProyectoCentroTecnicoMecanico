@@ -5,7 +5,7 @@ import Header from './components/header';
 import HamburgerMenu from './components/HamburgerMenu';
 import Home from './components/home';
 import AppointmentForm from './components/AppointmentForm';
-import RegisterForm from './components/registerform';
+import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/loginform';
 import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';

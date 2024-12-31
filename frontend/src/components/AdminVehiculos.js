@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AdminVehiculos = () => {
   const [vehiculos, setVehiculos] = useState([]); // Estado para almacenar vehículos
@@ -63,51 +64,55 @@ const AdminVehiculos = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Gestión de Vehículos</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Número de Serie</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Año</th>
-            <th>Placas</th>
-            <th>Cliente</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vehiculos.map((vehiculo) => (
-            <tr key={vehiculo._id}>
-              <td>{vehiculo.numeroSerie}</td>
-              <td>{vehiculo.marca}</td>
-              <td>{vehiculo.modelo}</td>
-              <td>{vehiculo.año}</td>
-              <td>{vehiculo.placas}</td>
-              <td>{vehiculo.cliente ? vehiculo.cliente.nombre : 'Sin cliente asociado'}</td>
-              <td>
-                <button
-                  className="btn btn-danger btn-sm me-2"
-                  onClick={() => handleEliminarVehiculo(vehiculo._id)}
-                >
-                  Eliminar
-                </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => abrirModal(vehiculo)}
-                >
-                  Actualizar
-                </button>
-              </td>
+      <h2 className="mb-4">Gestión de Vehículos</h2>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Número de Serie</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Año</th>
+              <th>Placas</th>
+              <th>Cliente</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {vehiculos.map((vehiculo) => (
+              <tr key={vehiculo._id}>
+                <td>{vehiculo.numeroSerie}</td>
+                <td>{vehiculo.marca}</td>
+                <td>{vehiculo.modelo}</td>
+                <td>{vehiculo.año}</td>
+                <td>{vehiculo.placas}</td>
+                <td>{vehiculo.cliente ? vehiculo.cliente.nombre : 'Sin cliente asociado'}</td>
+                <td>
+                  <div className="d-flex justify-content-center align-items-center gap-2">
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleEliminarVehiculo(vehiculo._id)}
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => abrirModal(vehiculo)}
+                    >
+                      Actualizar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Modal para actualizar vehículo */}
       {mostrarModal && (
         <div className="modal d-block" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Actualizar Vehículo</h5>
@@ -121,7 +126,7 @@ const AdminVehiculos = () => {
                       type="text"
                       className="form-control"
                       name="numeroSerie"
-                      value={vehiculoSeleccionado.numeroSerie || ''}
+                      value={vehiculoSeleccionado?.numeroSerie || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -131,7 +136,7 @@ const AdminVehiculos = () => {
                       type="text"
                       className="form-control"
                       name="marca"
-                      value={vehiculoSeleccionado.marca || ''}
+                      value={vehiculoSeleccionado?.marca || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -141,7 +146,7 @@ const AdminVehiculos = () => {
                       type="text"
                       className="form-control"
                       name="modelo"
-                      value={vehiculoSeleccionado.modelo || ''}
+                      value={vehiculoSeleccionado?.modelo || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -151,7 +156,7 @@ const AdminVehiculos = () => {
                       type="number"
                       className="form-control"
                       name="año"
-                      value={vehiculoSeleccionado.año || ''}
+                      value={vehiculoSeleccionado?.año || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -161,7 +166,7 @@ const AdminVehiculos = () => {
                       type="text"
                       className="form-control"
                       name="placas"
-                      value={vehiculoSeleccionado.placas || ''}
+                      value={vehiculoSeleccionado?.placas || ''}
                       onChange={handleInputChange}
                     />
                   </div>

@@ -1,0 +1,122 @@
+/* Estilo base para la tabla */
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+  }
+  
+  .table thead th {
+    text-align: center;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+  
+  .table td,
+  .table th {
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+    word-wrap: break-word;
+  }
+  
+  /* Estilo para botones de acción */
+  .btn-sm {
+    font-size: 0.875rem;
+    padding: 5px 10px;
+  }
+  
+  .btn-warning {
+    color: #fff;
+  }
+  
+  .btn-danger {
+    color: #fff;
+  }
+  
+  /* Estilo para el modal */
+  .modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-dialog {
+    max-width: 90%; /* Reduce el ancho en pantallas pequeñas */
+    margin: 1.75rem auto;
+  }
+  
+  .modal-content {
+    border-radius: 10px;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  /* Responsivo para pantallas pequeñas */
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 10px;
+    }
+  
+    .table {
+      font-size: 0.9rem;
+      word-wrap: break-word;
+    }
+  
+    .table thead {
+      display: none; /* Oculta el encabezado en pantallas pequeñas */
+    }
+  
+    .table tbody tr {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+  
+    .table tbody td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem;
+      text-align: left;
+    }
+  
+    .table tbody td::before {
+      content: attr(data-label); /* Usa data-label para agregar encabezados */
+      font-weight: bold;
+      margin-right: 10px;
+      color: #495057;
+    }
+  
+    .btn-sm {
+      width: 100%; /* Botones ocupan todo el ancho disponible */
+      margin-bottom: 5px; /* Agrega separación entre botones */
+    }
+  }
+  
+  /* Responsivo para pantallas extra pequeñas */
+  @media (max-width: 576px) {
+    .table tbody td {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .btn-sm {
+      font-size: 0.8rem;
+      padding: 5px 8px;
+    }
+  }
+  

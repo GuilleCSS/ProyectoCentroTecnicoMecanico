@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './AdminCitas.css'; 
 
 const AdminCitas = () => {
   const [citas, setCitas] = useState([]); // Estado para almacenar citas
@@ -97,13 +98,13 @@ const AdminCitas = () => {
         <tbody>
           {citas.map((cita) => (
             <tr key={cita._id}>
-              <td>{new Date(cita.fecha).toLocaleString()}</td>
-              <td>{cita.servicio}</td>
-              <td>{cita.estado}</td>
-              <td>
+              <td data-label="Fecha">{new Date(cita.fecha).toLocaleString()}</td>
+              <td data-label="Servicio">{cita.servicio}</td>
+              <td data-label="Estado">{cita.estado}</td>
+              <td data-label="Cliente">
                 {cita.cliente ? cita.cliente.nombre : 'Sin cliente asociado'}
               </td>
-              <td>
+              <td data-label="Acciones">
                 <button
                   className="btn btn-warning btn-sm me-2"
                   onClick={() => abrirModal(cita)}

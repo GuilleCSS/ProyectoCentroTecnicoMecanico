@@ -48,13 +48,20 @@ const Header = () => {
           <div className="bar"></div>
         </div>
 
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link className="navbar-brand fw-bold d-flex align-items-center" to="/">
+          {/* Imagen del logo */}
+          <img
+            src="/logo.png" // Ruta relativa al archivo en la carpeta public
+            alt="Logo"
+            className="me-2"
+            style={{ width: '40px', height: '40px', borderRadius: '50%' }} // Ajusta el tamaño según tu diseño
+          />
           Centro Técnico de Autos
         </Link>
 
         {/* Contenido dinámico basado en autenticación */}
         {isAuthenticated && (
-          <div className="d-flex align-items-center ms-auto">
+          <div className="d-flex align-items-center ms-auto header-auth">
             {/* Nombre del usuario */}
             <span className="text-white me-3 fw-semibold">
               Hola, {nombreUsuario}
@@ -65,7 +72,7 @@ const Header = () => {
               src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" // Imagen genérica
               alt="Perfil"
               style={{ width: '30px', height: '30px', borderRadius: '50%' }}
-              className="me-3"
+              className="user-icon me-3"
             />
 
             {/* Botón de cerrar sesión */}

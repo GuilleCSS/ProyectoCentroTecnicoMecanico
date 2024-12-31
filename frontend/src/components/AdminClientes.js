@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AdminClientes = () => {
   const [clientes, setClientes] = useState([]); // Estado para almacenar clientes
@@ -63,51 +64,62 @@ const AdminClientes = () => {
 
   return (
     <div className="container mt-4">
-      <h2>Gestión de Clientes</h2>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th>Correo</th>
-            <th>Dirección</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clientes.map((cliente) => (
-            <tr key={cliente._id}>
-              <td>{cliente.nombre}</td>
-              <td>{cliente.telefono}</td>
-              <td>{cliente.correo}</td>
-              <td>{cliente.direccion}</td>
-              <td>
-                <button
-                  className="btn btn-danger btn-sm me-2"
-                  onClick={() => handleEliminarCliente(cliente._id)}
-                >
-                  Eliminar
-                </button>
-                <button
-                  className="btn btn-warning btn-sm"
-                  onClick={() => abrirModal(cliente)}
-                >
-                  Actualizar
-                </button>
-              </td>
+      <h2 className="mb-4">Gestión de Clientes</h2>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Teléfono</th>
+              <th>Correo</th>
+              <th>Dirección</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {clientes.map((cliente) => (
+              <tr key={cliente._id}>
+                <td>{cliente.nombre}</td>
+                <td>{cliente.telefono}</td>
+                <td>{cliente.correo}</td>
+                <td>{cliente.direccion}</td>
+                <td>
+                  <div className="d-flex justify-content-center align-items-center gap-2">
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleEliminarCliente(cliente._id)}
+                    >
+                      Eliminar
+                    </button>
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => abrirModal(cliente)}
+                    >
+                      Actualizar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Modal para actualizar cliente */}
       {mostrarModal && (
-        <div className="modal d-block" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-          <div className="modal-dialog">
+        <div
+          className="modal d-block"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+        >
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Actualizar Cliente</h5>
-                <button type="button" className="btn-close" onClick={cerrarModal}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={cerrarModal}
+                ></button>
               </div>
               <div className="modal-body">
                 <form>
@@ -117,7 +129,7 @@ const AdminClientes = () => {
                       type="text"
                       className="form-control"
                       name="nombre"
-                      value={clienteSeleccionado.nombre || ''}
+                      value={clienteSeleccionado?.nombre || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -127,7 +139,7 @@ const AdminClientes = () => {
                       type="text"
                       className="form-control"
                       name="telefono"
-                      value={clienteSeleccionado.telefono || ''}
+                      value={clienteSeleccionado?.telefono || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -137,7 +149,7 @@ const AdminClientes = () => {
                       type="email"
                       className="form-control"
                       name="correo"
-                      value={clienteSeleccionado.correo || ''}
+                      value={clienteSeleccionado?.correo || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -147,7 +159,7 @@ const AdminClientes = () => {
                       type="text"
                       className="form-control"
                       name="direccion"
-                      value={clienteSeleccionado.direccion || ''}
+                      value={clienteSeleccionado?.direccion || ''}
                       onChange={handleInputChange}
                     />
                   </div>

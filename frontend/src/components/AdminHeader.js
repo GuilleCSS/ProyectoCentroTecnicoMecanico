@@ -22,11 +22,27 @@ const AdminHeader = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
+        {/* Marca y título */}
         <Link className="navbar-brand fw-bold" to="/admin/citas">
           Panel de Administración
         </Link>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ms-auto">
+
+        {/* Botón de menú responsivo */}
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#adminNavbar"
+          aria-controls="adminNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
+        {/* Enlaces del menú */}
+        <div className="collapse navbar-collapse" id="adminNavbar">
+          <ul className="navbar-nav ms-auto text-center">
             <li className="nav-item">
               <Link className="nav-link text-white fw-semibold" to="/admin/citas">
                 Citas
