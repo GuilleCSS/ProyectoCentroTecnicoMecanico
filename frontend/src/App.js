@@ -5,7 +5,7 @@ import Header from './components/header';
 import HamburgerMenu from './components/HamburgerMenu';
 import Home from './components/home';
 import AppointmentForm from './components/AppointmentForm';
-import RegisterForm from './components/RegisterForm';
+import RegisterForm from './components/registerform';
 import LoginForm from './components/loginform';
 import AdminHeader from './components/AdminHeader';
 import AdminCitas from './components/AdminCitas';
@@ -13,7 +13,8 @@ import AdminVehiculos from './components/AdminVehiculos';
 import AdminClientes from './components/AdminClientes';
 import PrivateRoute from './components/PrivateRoute'; // Componente para proteger rutas privadas
 import VehicleTracking from './components/VehicleTracking'; // Asegúrate de importar VehicleTracking
-import ThankYouPage from './components/ThankYou'
+import ThankYouPage from './components/ThankYou';
+import Testimonios from './components/Testimonios'; // Importa el componente de Testimonios
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './index.css';
 
@@ -42,7 +43,10 @@ function AppContent() {
         <Route path="/login" element={<LoginForm />} />
 
         {/* Ruta para el estado del vehículo */}
-        <Route path="/vehicle-status" element={<VehicleTracking />} /> {/* Asegúrate de que esté incluida */}
+        <Route path="/vehicle-status" element={<VehicleTracking />} />
+
+        {/* Nueva ruta para Testimonios */}
+        <Route path="/testimonios" element={<Testimonios />} />
 
         {/* Rutas del administrador protegidas */}
         <Route path="/admin" element={<PrivateRoute element={<AdminHeader />} />} />

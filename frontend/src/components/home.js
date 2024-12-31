@@ -121,6 +121,48 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Ofertas Especiales */}
+      <section className="container mb-5">
+        <h2 className="text-center text-danger mb-4">Ofertas Especiales</h2>
+        <div className="row">
+          <div className="col-md-6 mb-4">
+            <div className="offer-banner p-4 rounded-lg d-flex flex-column justify-content-between align-items-start">
+              <h4 className="text-white">¡20% de Descuento en Cambio de Aceite!</h4>
+              <p className="text-white">Realiza tu cambio de aceite con nosotros y aprovecha un 20% de descuento en el servicio. ¡Tu vehículo te lo agradecerá!</p>
+              <button className="btn btn-warning btn-lg text-uppercase">¡Aprovecha ahora!</button>
+            </div>
+          </div>
+
+          <div className="col-md-6 mb-4">
+            <div className="offer-banner p-4 rounded-lg d-flex flex-column justify-content-between align-items-start">
+              <h4 className="text-white">Revisión de Frenos GRATIS</h4>
+              <p className="text-white">Asegura tu seguridad en la carretera. Ven y revisa los frenos de tu vehículo sin costo alguno.</p>
+              <button className="btn btn-warning btn-lg text-uppercase">¡Ven y revisa ahora!</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Galería de Imágenes */}
+      <section className="container mb-5">
+        <h2 className="text-center text-danger mb-4">Galería de Nuestro Trabajo</h2>
+        <div className="row g-4">
+          {[{ img: '/motor2.jpg', alt: 'Reparación de Motor' },
+            { img: '/frenos.jpg', alt: 'Revisión de Frenos' },
+            { img: '/aceite.jpg', alt: 'Cambio de Aceite' }]
+            .map((image, index) => (
+              <div key={index} className="col-md-4">
+                <div className="card shadow-sm rounded-lg">
+                  <img src={image.img} alt={image.alt} className="card-img-top" />
+                  <div className="card-body">
+                    <p className="card-text">{image.alt}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </section>
+
       {/* Mapa y Ubicación */}
       <section className="container mb-5">
         <h2 className="text-center text-danger mb-4">Nuestra Ubicación</h2>
@@ -161,6 +203,110 @@ const Home = () => {
           Agendar una Cita
         </button>
       </section>
+
+      {/* Preguntas Frecuentes (FAQ) */}
+<section className="container mb-5">
+  <h2 className="text-center text-danger mb-4">Preguntas Frecuentes (FAQ)</h2>
+  <div className="accordion" id="faqAccordion">
+    <div className="accordion-item">
+      <h2 className="accordion-header" id="faqHeading1">
+        <button
+          className="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faqCollapse1"
+          aria-expanded="true"
+          aria-controls="faqCollapse1"
+        >
+          ¿Cómo puedo agendar una cita en el taller?
+        </button>
+      </h2>
+      <div
+        id="faqCollapse1"
+        className="accordion-collapse collapse show"
+        aria-labelledby="faqHeading1"
+        data-bs-parent="#faqAccordion"
+      >
+        <div className="accordion-body">
+          Puedes agendar una cita fácilmente a través de nuestro sitio web. Solo necesitas ingresar tus datos, los del vehículo y seleccionar una fecha.
+        </div>
+      </div>
+    </div>
+    <div className="accordion-item">
+      <h2 className="accordion-header" id="faqHeading2">
+        <button
+          className="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faqCollapse2"
+          aria-expanded="false"
+          aria-controls="faqCollapse2"
+        >
+          ¿Cuál es el horario de atención?
+        </button>
+      </h2>
+      <div
+        id="faqCollapse2"
+        className="accordion-collapse collapse"
+        aria-labelledby="faqHeading2"
+        data-bs-parent="#faqAccordion"
+      >
+        <div className="accordion-body">
+          Nuestro horario de atención es de lunes a sábado, de 8:00 AM a 6:00 PM. No abrimos los domingos.
+        </div>
+      </div>
+    </div>
+    <div className="accordion-item">
+      <h2 className="accordion-header" id="faqHeading3">
+        <button
+          className="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faqCollapse3"
+          aria-expanded="false"
+          aria-controls="faqCollapse3"
+        >
+          ¿Qué tipo de servicios ofrecen?
+        </button>
+      </h2>
+      <div
+        id="faqCollapse3"
+        className="accordion-collapse collapse"
+        aria-labelledby="faqHeading3"
+        data-bs-parent="#faqAccordion"
+      >
+        <div className="accordion-body">
+          Ofrecemos una variedad de servicios automotrices como diagnóstico de motor, cambio de aceite, reparación de frenos, mantenimiento preventivo, y más.
+        </div>
+      </div>
+    </div>
+    <div className="accordion-item">
+      <h2 className="accordion-header" id="faqHeading4">
+        <button
+          className="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#faqCollapse4"
+          aria-expanded="false"
+          aria-controls="faqCollapse4"
+        >
+          ¿Ofrecen garantías en sus servicios?
+        </button>
+      </h2>
+      <div
+        id="faqCollapse4"
+        className="accordion-collapse collapse"
+        aria-labelledby="faqHeading4"
+        data-bs-parent="#faqAccordion"
+      >
+        <div className="accordion-body">
+          Sí, ofrecemos una garantía de 6 meses en la mayoría de nuestros servicios y repuestos.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Sección nueva: Contacto */}
       <section className="bg-dark text-white py-5">

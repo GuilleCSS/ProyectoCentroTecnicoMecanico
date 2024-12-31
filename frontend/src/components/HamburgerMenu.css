@@ -36,7 +36,7 @@
   width: 200px;
   background-color: #343a40;
   color: white;
-  z-index: 999; /* Asegúrate de que el menú también esté encima */
+  z-index: 999;
   display: none;
   border-radius: 5px;
 }
@@ -57,4 +57,11 @@
 .menu ul li a {
   color: white;
   text-decoration: none;
+}
+
+/* Ajustes cuando el menú se abre */
+.menu.open {
+  position: fixed;
+  top: 60px;
+  right: 20px;
 }

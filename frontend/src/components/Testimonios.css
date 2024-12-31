@@ -1,0 +1,109 @@
+.testimonios-container {
+  padding: 40px;
+  background-color: #f1f5f8;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.testimonios-lista {
+  margin-top: 30px;
+}
+
+.testimonio-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.testimonio-header {
+  font-size: 1.5rem;
+  color: #2d3748;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.comentario {
+  font-size: 1.1rem;
+  color: #4a5568;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.calificacion {
+  color: #fbbf24;
+  font-size: 1.5rem;
+}
+
+.calificacion .filled {
+  color: #fbbf24;
+}
+
+.calificacion .empty {
+  color: #e2e8f0;
+}
+
+.testimonial-form .form-control {
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 1px solid #e2e8f0;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 15px;
+  font-size: 16px;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+
+.testimonial-form {
+  margin-top: 40px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 8px;
+  display: block;
+}
+
+textarea {
+  resize: vertical;
+}

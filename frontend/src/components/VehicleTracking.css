@@ -1,53 +1,75 @@
-/* Estilos para la línea de tiempo del vehículo */
 .timeline-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .timeline {
-    list-style: none;
-    padding-left: 0;
-  }
-  
-  .timeline-item {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 20px;
-  }
-  
-  .timeline-item:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 5px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #007bff;
-    border: 2px solid #fff;
-  }
-  
-  .timeline-item.active:before {
-    background-color: #28a745;
-  }
-  
-  .timeline-content {
-    border-left: 2px solid #007bff;
-    padding-left: 15px;
-  }
-  
-  .timeline-content .stage {
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .timeline-content .date {
-    font-style: italic;
-    color: #777;
-  }
-  
-  .timeline-content .status {
-    font-size: 1.1rem;
-    color: #555;
-  }
-  
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.timeline {
+  list-style: none;
+  padding-left: 0;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-item:before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #007bff;
+  border: 2px solid #fff;
+}
+
+.timeline-item.active:before {
+  background-color: #28a745;
+}
+
+.timeline-icon {
+  position: absolute;
+  left: 0;
+  font-size: 2rem;
+  color: #007bff;
+}
+
+.timeline-item.active .timeline-icon {
+  color: #28a745;
+}
+
+.timeline-content {
+  border-left: 2px solid #007bff;
+  padding-left: 20px;
+  width: 100%;
+}
+
+.timeline-content .stage {
+  font-weight: bold;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.timeline-content .date {
+  font-style: italic;
+  color: #777;
+}
+
+.timeline-content .status {
+  font-size: 1.1rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+.timeline-item:last-child .timeline-content {
+  border-color: #28a745;
+}
+
+.timeline-item:last-child .timeline-icon {
+  color: #28a745;
+}

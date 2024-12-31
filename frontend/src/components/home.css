@@ -64,3 +64,131 @@ footer {
   text-align: center;
   padding: 2rem 0;
 }
+
+/* Estilos para la sección de Ofertas Especiales */
+.offer-banner {
+  background-color: #dc3545; /* Fondo color rojo */
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.offer-banner:hover {
+  transform: scale(1.05); /* Añadir zoom cuando el usuario pasa el ratón */
+}
+
+.offer-banner h4 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.offer-banner p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.offer-banner .btn-warning {
+  background-color: #f39c12;
+  border-color: #f39c12;
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.offer-banner .btn-warning:hover {
+  background-color: #e67e22;
+  border-color: #e67e22;
+}
+
+/* Diseño Responsivo para las ofertas */
+@media (max-width: 768px) {
+  .offer-banner {
+    margin-bottom: 20px;
+  }
+
+  .offer-banner h4 {
+    font-size: 1.5rem;
+  }
+
+  .offer-banner p {
+    font-size: 1rem;
+  }
+
+  .offer-banner .btn-warning {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Estilos para la Galería */
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Estilos para los iconos en el Proceso de Trabajo */
+.text-center i {
+  color: #dc3545;
+  transition: transform 0.3s ease;
+}
+
+.text-center i:hover {
+  transform: scale(1.1);
+}
+
+h5, h6 {
+  font-weight: 700;
+}
+
+/* Ajustes en móvil para las imágenes */
+@media (max-width: 768px) {
+  .card-img-top {
+    height: 150px;
+  }
+}
+
+/* Estilo para la Sección de Preguntas Frecuentes */
+.accordion-button {
+  background-color: #dc3545; /* Rojo para los botones */
+  color: white;
+  font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #c82333; /* Rojo oscuro cuando está expandido */
+  color: white;
+}
+
+.accordion-body {
+  background-color: #f8f9fa; /* Color de fondo de la respuesta */
+  font-size: 1rem;
+  padding: 1rem;
+  color: #495057;
+}
+
+.accordion-item {
+  margin-bottom: 10px;
+}
+
+.accordion-header {
+  font-size: 1.2rem;
+}
+
+.accordion-header .accordion-button {
+  font-size: 1.1rem;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .accordion-button {
+    font-size: 1rem;
+  }
+  .accordion-body {
+    font-size: 0.9rem;
+  }
+}
+
